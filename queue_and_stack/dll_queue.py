@@ -10,6 +10,9 @@ class Queue:
         # self.storage = ?
         self.storage = []
 
+    def __str__(self):
+        return f"{self.storage}"
+
     def enqueue(self, value):
         self.size += 1
         return self.storage.insert(0, value)
@@ -22,3 +25,10 @@ class Queue:
 
     def len(self):
         return self.size
+
+q = Queue()
+
+q.enqueue(1)
+q.enqueue(2)
+q.enqueue(3)
+print(q)
