@@ -14,7 +14,7 @@ class Stack:
 
     def push(self, value):
         self.size += 1
-        return self.storage.push(value)
+        return self.storage.append(value)
 
     def pop(self):
         if self.len() < 1:
@@ -29,4 +29,4 @@ d = Stack()
 d.push(1)
 d.push(2)
 d.push(3)
-print(q)
+print(d)
