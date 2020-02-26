@@ -92,10 +92,31 @@ class DoublyLinkedList:
         self.add_to_head(value)
 
     def move_to_end(self, node):
-        pass
+        self.delete(node)
+        self.add_to_tail(node.value)
 
     def delete(self, node):
-        pass
+        # if node is empty
+        if not self.head and not self.tail:
+            print('error: attempted to delete node not in list')
+            return
+        # if node is both
+        elif self.head == self.tail:
+            self.head = None
+            self.tail = None
+        # if node is head
+        elif node == self.head:
+            self.head = self.head.next
+            node.delete()
+        # if node is tail
+        elif node == self.tail:
+            self.tail = self.tail.prev
+            node.delete()
+            # Don't need to delete. Garbage collection will take care of it
+        # if node is midle
+        else:
+            node.delete()
+        self.length -= 1
 
     def get_max(self):
         pass
