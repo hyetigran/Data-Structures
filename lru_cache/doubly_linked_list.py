@@ -49,25 +49,74 @@ class DoublyLinkedList:
         return self.length
 
     def add_to_head(self, value):
-        pass
+        new_node = ListNode(value)
+        self.length +=1
+        if not self.head and not self.tail:
+            self.head = new_node
+            self.tail = new_node
+        else:
+            new_node.next = self.head
+            self.head.prev = new_node
+            self.head = new_node
 
     def remove_from_head(self):
-        pass
+        value = self.head.value
+        self.delete(self.head)
+        return value
 
     def add_to_tail(self, value):
-        pass
+        new_node = ListNode(value)
+        self.length += 1
+        if not self.head and not self.tail:
+            self.head = new_node
+            self.tail = new_node
+        else:
+            new_node.prev = self.tail
+            self.tail.next = new_node
+            self.tail = new_node
 
     def remove_from_tail(self):
-        pass
+        value = self.tail.value
+        self.delete(self.tail)
+        return value
 
     def move_to_front(self, node):
-        pass
+        if node is self.head:
+            return
+        value = node.value
+        if node is self.tail:
+            self.remove_from_tail()
+        else:
+            node.delete()
+            self.length -= 1
+        self.add_to_head(value)
 
     def move_to_end(self, node):
-        pass
+        self.delete(node)
+        self.add_to_tail(node.value)
 
     def delete(self, node):
-        pass
+        # if node is empty
+        if not self.head and not self.tail:
+            print('error: attempted to delete node not in list')
+            return
+        # if node is both
+        elif self.head == self.tail:
+            self.head = None
+            self.tail = None
+        # if node is head
+        elif node == self.head:
+            self.head = self.head.next
+            node.delete()
+        # if node is tail
+        elif node == self.tail:
+            self.tail = self.tail.prev
+            node.delete()
+            # Don't need to delete. Garbage collection will take care of it
+        # if node is midle
+        else:
+            node.delete()
+        self.length -= 1
 
     def get_max(self):
         pass

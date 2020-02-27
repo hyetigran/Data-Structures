@@ -1,3 +1,6 @@
+from doubly_linked_list import ListNode
+from doubly_linked_list import DoublyLinkedList
+
 class LRUCache:
     """
     Our LRUCache class keeps track of the max number of nodes it
@@ -7,7 +10,20 @@ class LRUCache:
     to every node stored in the cache.
     """
     def __init__(self, limit=10):
-        pass
+        self.limit = limit
+        self.size = 0
+        self.dll = DoublyLinkedList()
+        self.cache = {}
+
+    def find_node(self, key):
+        node = self.dll.head
+        if node.value == key:
+            return node
+        while self.dll.tail is not node:
+            node = node.next
+            if node.value == key:
+                return node
+        return None
 
     """
     Retrieves the value associated with the given key. Also
@@ -17,7 +33,13 @@ class LRUCache:
     key-value pair doesn't exist in the cache.
     """
     def get(self, key):
-        pass
+        if key not in self.cache:
+            return None
+        
+        value = self.cache[key]
+        node = self.find_node(key)
+        self.dll.move_to_front(node)
+        return value
 
     """
     Adds the given key-value pair to the cache. The newly-
@@ -30,4 +52,64 @@ class LRUCache:
     the newly-specified value.
     """
     def set(self, key, value):
-        pass
+        if not key in self.cache:
+            self.cache[key] = value
+            self.dll.add_to_head(key)
+        else:
+            self.cache[key] = value
+            node = ListNode(value)
+            self.dll.move_to_front(node)
+        if self.dll.length > self.limit:
+            del self.cache[self.dll.tail.value]
+            self.dll.remove_from_tail()
+
+
+#  class example
+
+# class LRUCache:
+#     """
+#     Our LRUCache class keeps track of the max number of nodes it
+#     can hold, the current number of nodes it is holding, a doubly-
+#     linked list that holds the key-value entries in the correct
+#     order, as well as a storage dict that provides fast access
+#     to every node stored in the cache.
+#     """
+#     def __init__(self, limit=10):
+#         self.limit = limit
+#         self.size = 0
+#         self.storage = {}
+#         self.order = DoublyLinkedList()
+
+#     def get(self, key):
+#         # if key is in storage
+#         if key in self.storage:
+#             node = self.storage[key]
+#             self.order.move_to_end(node)
+#             return node.value[1]
+#         else:
+#             return None
+
+#     def set(self, key):
+#         # check and see if they key is in the dict
+#         if key is self.storage:
+#             # if it is 
+#             node = self.storage[key]
+#             # overwrite the value
+#             node.value = (key, value)
+#             # move it to the end
+#             self.order.move_to_end(node)
+#             return
+
+#             # check and see if cache is full
+#             if self.size == self.limit:
+#                 # remove oldest entry from dictionary
+#                 del self.storage[self.order.head.value[0]]
+#                 # and LL
+#                 self.order.remove_from_head()
+#                 self.size -= 1
+#             # add to the LL (key, value)
+#             self.order.add_to_tail((key, value))
+#             # add the key and value to the dict
+#             self.storage[key] = self.order.tail
+#             # increment size
+#             self.size += 1
