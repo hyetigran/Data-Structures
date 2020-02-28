@@ -60,17 +60,58 @@ class BinarySearchTree:
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self, node):
-        pass
+        if node.left:
+            self.in_order_print(node.left)
+
+        print(node.value)
+
+        if node.right:
+            self.in_order_print(node.right)
+        
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
-        pass
+        # BFT Steps:
+        # initialize a queue
+        q = Queue()
+        # push root to queue
+        q.enqueue(node)
+        # while stack not empty
+        while q.size > 0:
+            # pop top item out of queue into temp
+            current_node = q.dequeue()
+            # DO THE THING!!!!!!
+            if current_node:
+                print(current_node.value)
+            # if temp has right right put into queue
+            if current_node.left:
+                q.enqueue(current_node.left)
+            if current_node.right:
+                q.enqueue(current_node.right)
+            # if temp has left left put into queue
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self, node):
-        pass
+        # DFT Steps:
+        # initialize a stack
+        s = Stack()
+        # push root to stack
+        s.push(node)
+        # while stack not empty
+        while s.size > 0:
+            # pop top item out of stack into temp
+            current_node = s.pop()
+            # DO THE THING!!!!!!
+            if current_node:
+                print(current_node.value)
+            # if temp has right right put into stack
+            if current_node.left:
+                s.push(current_node.left)
+            if current_node.right:
+                s.push(current_node.right)
+            # if temp has left left put into stack
 
     # STRETCH Goals -------------------------
     # Note: Research may be required
